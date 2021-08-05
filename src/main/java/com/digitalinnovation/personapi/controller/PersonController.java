@@ -1,6 +1,7 @@
 package com.digitalinnovation.personapi.controller;
 
 import com.digitalinnovation.personapi.dto.request.PersonDTO;
+import com.digitalinnovation.personapi.exceptions.ParsonNotFoundException;
 import com.digitalinnovation.personapi.service.PersonService;
 import com.digitalinnovation.personapi.dto.MessageResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,11 @@ public class PersonController {
 
    public List<PersonDTO> listAll(){
        return personService.listAll();
+   }
 
+   @GetMapping("/{id}")
+   public PersonDTO findById(@PathVariable Long id) throws ParsonNotFoundException {
+       return personService.findById(id);
    }
 
 
