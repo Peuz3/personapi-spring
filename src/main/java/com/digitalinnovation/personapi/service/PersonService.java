@@ -42,9 +42,18 @@ public class PersonService {
     }
 
     public PersonDTO findById(Long id) throws ParsonNotFoundException {
-        Person person =  personRepository.findById(id).orElseThrow(()-> new ParsonNotFoundException(id));
+        Person person = verifyIfExists(id);
 
         return personMapper.toDTO(person);
+    }
 
+    public void delete(Long id) throws ParsonNotFoundException {
+        verifyIfExists(id);
+
+        personRepository.deleteById(id);
+    }
+
+    private Person verifyIfExists(Long id) throws ParsonNotFoundException {
+        return  personRepository.findById(id).orElseThrow(()-> new ParsonNotFoundException(id));
     }
 }

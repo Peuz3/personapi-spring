@@ -15,29 +15,36 @@ import java.util.List;
 @RequestMapping("/api/v1/people")
 public class PersonController {
 
-   private PersonService personService;
+    private PersonService personService;
 
-   @Autowired
+    @Autowired
     public PersonController(PersonService personService) {
 
-       this.personService = personService;
+        this.personService = personService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MessageResponseDTO createPerson(@RequestBody @Valid PersonDTO personDTO){
 
-       return personService.createPerson(personDTO);
+        return personService.createPerson(personDTO);
     }
 
-   public List<PersonDTO> listAll(){
-       return personService.listAll();
-   }
+    public List<PersonDTO> listAll(){
+        return personService.listAll();
+    }
 
-   @GetMapping("/{id}")
-   public PersonDTO findById(@PathVariable Long id) throws ParsonNotFoundException {
-       return personService.findById(id);
-   }
+    @GetMapping("/{id}")
+    public PersonDTO findById(@PathVariable Long id) throws ParsonNotFoundException {
+        return personService.findById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) throws ParsonNotFoundException {
+        personService.delete(id);
+
+    }
 
 
 
