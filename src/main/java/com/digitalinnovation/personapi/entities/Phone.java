@@ -1,4 +1,4 @@
-package com.digitalinnovation.personapi.entity;
+package com.digitalinnovation.personapi.entities;
 
 import com.digitalinnovation.personapi.enums.PhoneType;
 import lombok.AllArgsConstructor;
@@ -6,10 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
-@Data //Já gera os gets e sets
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,12 +25,10 @@ public class Phone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PhoneType phoneType;
 
     @Column(nullable = false)
     private String number;
-
-
 }

@@ -1,28 +1,35 @@
 package com.digitalinnovation.personapi.service;
 
 import com.digitalinnovation.personapi.dto.MessageResponseDTO;
-import com.digitalinnovation.personapi.entity.Person;
+import com.digitalinnovation.personapi.dto.request.PersonDTO;
+import com.digitalinnovation.personapi.entities.Person;
+import com.digitalinnovation.personapi.mapper.PersonMapper;
 import com.digitalinnovation.personapi.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class PersonService {
 
     private PersonRepository personRepository;
 
+    private final PersonMapper personMapper = PersonMapper.INSTANCE;
+
     @Autowired
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
-    public MessageResponseDTO createPerson(Person person){
-        Person personSaved = personRepository.save(person);
+    public MessageResponseDTO createPerson(PersonDTO personDTO){
+        Person personToSave = personMapper.toModel(personDTO);
+
+        Person personSaved = personRepository.save(personToSave);
         return MessageResponseDTO
                 .builder()
                 .message("Created person with ID " + personSaved.getId())
                 .build();
+
+
 
     }
 }
