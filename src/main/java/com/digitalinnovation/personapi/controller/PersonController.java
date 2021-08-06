@@ -1,7 +1,7 @@
 package com.digitalinnovation.personapi.controller;
 
 import com.digitalinnovation.personapi.dto.request.PersonDTO;
-import com.digitalinnovation.personapi.exceptions.ParsonNotFoundException;
+import com.digitalinnovation.personapi.exceptions.PersonNotFoundException;
 import com.digitalinnovation.personapi.service.PersonService;
 import com.digitalinnovation.personapi.dto.MessageResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +35,19 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public PersonDTO findById(@PathVariable Long id) throws ParsonNotFoundException {
+    public PersonDTO findById(@PathVariable Long id) throws PersonNotFoundException {
         return personService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public  MessageResponseDTO updateById (@PathVariable Long id,@RequestBody @Valid PersonDTO personDTO) throws PersonNotFoundException {
+        return personService.updateById(id, personDTO);
+
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable Long id) throws ParsonNotFoundException {
+    public void deleteById(@PathVariable Long id) throws PersonNotFoundException {
         personService.delete(id);
 
     }
